@@ -7345,15 +7345,6 @@ class TrisSaveImageNode:
         return (str(result),)
 
 
-NODE_CLASS_MAPPINGS = {
-    "TrisSaveImageNode": TrisSaveImageNode
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "TrisSaveImageNode": "Tri's save image node"
-}
-
-
 # LOAD IMAGE NODE
 class WAS_Load_Image:
 
@@ -13337,6 +13328,7 @@ class WAS_Integer_Place_Counter:
 
 # NODE MAPPING
 NODE_CLASS_MAPPINGS = {
+    "Tri's Save Image Node": TrisSaveImageNode,
     "BLIP Model Loader": WAS_BLIP_Model_Loader,
     "Blend Latents": WAS_Blend_Latents,
     "Bus Node": WAS_Bus,
