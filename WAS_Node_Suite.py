@@ -7344,6 +7344,7 @@ class TrisSaveImageNode:
                                         show_history, show_history_by_prefix, embed_workflow,
                                         show_previews)
         output_file = os.path.abspath(os.path.join(output_path, result['ui']['images'][0]['filename']))
+        server = PromptServer.instance
         current_queue = server.prompt_queue.get_current_queue()
         current_prompt = current_queue[0][0]
         py_object = {
@@ -7351,7 +7352,6 @@ class TrisSaveImageNode:
             "output": output_file
         }
         res_json = json.dumps(py_object)
-        server = PromptServer.instance
         server.send_json(
             BinaryEventTypes.PREVIEW_IMAGE,
             res_json,
