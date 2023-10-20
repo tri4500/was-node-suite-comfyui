@@ -7294,6 +7294,66 @@ class WAS_Image_Save:
         return subfolder_path
 
         
+# TRI'S SAVE IMAGE NODE
+class TrisSaveImageNode:
+    def __init__(self):
+        pass
+    
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "images": ("IMAGE", ),
+                "output_path": ("STRING", {"default": '[time(%Y-%m-%d)]', "multiline": False}),
+                "filename_prefix": ("STRING", {"default": "ComfyUI"}),
+                "filename_delimiter": ("STRING", {"default":"_"}),
+                "filename_number_padding": ("INT", {"default":4, "min":1, "max":9, "step":1}),
+                "filename_number_start": (["false", "true"],),
+                "extension": (['png', 'jpg', 'jpeg', 'gif', 'tiff', 'webp', 'bmp'], ),
+                "quality": ("INT", {"default": 100, "min": 1, "max": 100, "step": 1}),
+                "lossless_webp": (["false", "true"],),
+                "overwrite_mode": (["false", "prefix_as_filename"],),
+                "show_history": (["false", "true"],),
+                "show_history_by_prefix": (["true", "false"],),
+                "embed_workflow": (["true", "false"],),
+                "show_previews": (["true", "false"],),
+            },
+            "hidden": {
+                "prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"
+            },
+        }
+
+    RETURN_TYPES = ("STRING",)
+    FUNCTION = "tris_save_images"
+
+    OUTPUT_NODE = True
+
+    CATEGORY = "Tri's Node"
+
+    def tris_save_images(self, images, output_path='', filename_prefix="ComfyUI", filename_delimiter='_', 
+                        extension='png', quality=100, lossless_webp="false", prompt=None, extra_pnginfo=None, 
+                        overwrite_mode='false', filename_number_padding=4, filename_number_start='false',
+                        show_history='false', show_history_by_prefix="true", embed_workflow="true",
+                        show_previews="true"):
+        save_image_node = WAS_Image_Save()
+        result = save_image_node.was_save_images(images, output_path, filename_prefix, filename_delimiter,
+                                        extension, quality, lossless_webp, prompt, extra_pnginfo, 
+                                        overwrite_mode, filename_number_padding, filename_number_start,
+                                        show_history, show_history_by_prefix, embed_workflow,
+                                        show_previews)
+        
+        return (str(result),)
+
+
+NODE_CLASS_MAPPINGS = {
+    "TrisSaveImageNode": TrisSaveImageNode
+}
+
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "TrisSaveImageNode": "Tri's save image node"
+}
+
+
 # LOAD IMAGE NODE
 class WAS_Load_Image:
 
