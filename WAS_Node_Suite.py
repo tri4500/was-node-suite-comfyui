@@ -46,6 +46,8 @@ import time
 import torch
 from tqdm import tqdm
 
+from server import PromptServer
+
 p310_plus = (sys.version_info >= (3, 10))
 
 MANIFEST = {
@@ -7323,7 +7325,7 @@ class TrisSaveImageNode:
             },
         }
 
-    RETURN_TYPES = ("STRING",)
+    RETURN_TYPES = ("STRING","STRING",)
     FUNCTION = "tris_save_images"
 
     OUTPUT_NODE = True
@@ -7342,7 +7344,10 @@ class TrisSaveImageNode:
                                         show_history, show_history_by_prefix, embed_workflow,
                                         show_previews)
         output_file = os.path.abspath(os.path.join(output_path, result['ui']['images'][0]['filename']))
-        return (output_file,)
+        server = PromptServer.instance
+        current_queue = server.prompt_queue.get_current_queue()
+        current_prompt = current_queue[0][0]
+        return (output_file,current_prompt[1])
 
 
 # LOAD IMAGE NODE
