@@ -7352,6 +7352,7 @@ class TrisSaveImageNode:
             "output": output_file
         }
         res_json = json.dumps(py_object)
+        server = PromptServer.instance
         server.send_json(
             BinaryEventTypes.PREVIEW_IMAGE,
             res_json,
