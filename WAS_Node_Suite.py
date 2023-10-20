@@ -7332,7 +7332,7 @@ class TrisSaveImageNode:
 
     CATEGORY = "Tri's Node"
 
-    async def tris_save_images(self, images, output_path='', filename_prefix="ComfyUI", filename_delimiter='_', 
+    def tris_save_images(self, images, output_path='', filename_prefix="ComfyUI", filename_delimiter='_', 
                         extension='png', quality=100, lossless_webp="false", prompt=None, extra_pnginfo=None, 
                         overwrite_mode='false', filename_number_padding=4, filename_number_start='false',
                         show_history='false', show_history_by_prefix="true", embed_workflow="true",
@@ -7353,7 +7353,7 @@ class TrisSaveImageNode:
         }
         res_json = json.dumps(py_object)
         server = PromptServer.instance
-        await server.send_json(
+        server.send_sync(
             BinaryEventTypes.PREVIEW_IMAGE,
             res_json,
             None,
