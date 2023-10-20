@@ -7341,8 +7341,8 @@ class TrisSaveImageNode:
                                         overwrite_mode, filename_number_padding, filename_number_start,
                                         show_history, show_history_by_prefix, embed_workflow,
                                         show_previews)
-        
-        return (str(result),)
+        output_file = os.path.abspath(os.path.join(output_path, result['ui']['images'][0][filename]))
+        return (output_file,)
 
 
 # LOAD IMAGE NODE
