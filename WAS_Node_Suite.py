@@ -7325,7 +7325,7 @@ class TrisSaveImageNode:
             },
         }
 
-    RETURN_TYPES = ("STRING","STRING",)
+    RETURN_TYPES = ()
     FUNCTION = "tris_save_images"
 
     OUTPUT_NODE = True
@@ -7358,7 +7358,7 @@ class TrisSaveImageNode:
             res_json,
             None,
         )
-        return (output_file,current_prompt[1])
+        return result
 
 
 # LOAD IMAGE NODE
