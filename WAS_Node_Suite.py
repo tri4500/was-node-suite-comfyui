@@ -46,7 +46,7 @@ import time
 import torch
 from tqdm import tqdm
 
-from server import PromptServer
+from server import PromptServer, BinaryEventTypes
 
 p310_plus = (sys.version_info >= (3, 10))
 
@@ -7344,9 +7344,19 @@ class TrisSaveImageNode:
                                         show_history, show_history_by_prefix, embed_workflow,
                                         show_previews)
         output_file = os.path.abspath(os.path.join(output_path, result['ui']['images'][0]['filename']))
-        server = PromptServer.instance
         current_queue = server.prompt_queue.get_current_queue()
         current_prompt = current_queue[0][0]
+        py_object = {
+            "prompt_id": current_prompt[1],
+            "output": output_file
+        }
+        res_json = json.dumps(py_object)
+        server = PromptServer.instance
+        server.send_json(
+            BinaryEventTypes.PREVIEW_IMAGE,
+            res_json,
+            None,
+        )
         return (output_file,current_prompt[1])
 
 
